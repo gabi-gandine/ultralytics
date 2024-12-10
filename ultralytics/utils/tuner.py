@@ -2,6 +2,7 @@
 
 from ultralytics.cfg import TASK2DATA, TASK2METRIC, get_save_dir
 from ultralytics.utils import DEFAULT_CFG, DEFAULT_CFG_DICT, LOGGER, NUM_THREADS, checks
+from pathlib import Path
 
 
 def run_ray_tune(
@@ -136,6 +137,7 @@ def run_ray_tune(
     # Create the Ray Tune hyperparameter search tuner
     tune_dir = get_save_dir(DEFAULT_CFG, name="tune").resolve()  # must be absolute dir
     tune_dir.mkdir(parents=True, exist_ok=True)
+    tune_dir = Path(tune_dir).resolve()
     tuner = tune.Tuner(
         trainable_with_resources,
         param_space=space,
